@@ -1,0 +1,15 @@
+{
+  "name": "SleepyWatch",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.18.0",
+    "prettier": "^2.2.1"
+  }
+}
