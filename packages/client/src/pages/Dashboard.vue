@@ -1,0 +1,121 @@
+<template lang="pug">
+q-page.flex.flex-center.column
+  h3 Blinks Per Minute: {{ blinksPerMinute }}
+  h5 Total blinks: {{ blinks }}
+  p(v-show="error") {{ error }}
+  video#camera(width="640", height="680", muted, autoplay)
+</template>
+
+<script>
+import * as faceLandmarksDetection from "@tensorflow-models/face-landmarks-detection";
+import * as tf from "@tensorflow/tfjs";
+import { setWasmPaths } from "@tensorflow/tfjs-backend-wasm";
+
+import wasmSimdPath from "@tensorflow/tfjs-backend-wasm/dist/tfjs-backend-wasm-simd.wasm";
+import wasmSimdThreadedPath from "@tensorflow/tfjs-backend-wasm/dist/tfjs-backend-wasm-threaded-simd.wasm";
+import wasmPath from "@tensorflow/tfjs-backend-wasm/dist/tfjs-backend-wasm.wasm";
+
+setWasmPaths({
+  "tfjs-backend-wasm.wasm": wasmPath,
+  "tfjs-backend-wasm-simd.wasm": wasmSimdPath,
+  "tfjs-backend-wasm-threaded-simd.wasm": wasmSimdThreadedPath,
+});
+
+export default {
+  name: "Dashboard.vue",
+  data() {
+    return {
+      blinks: 0,
+      blinksPerMinute: 0,
+      error: "",
+      loading: true,
+    };
+  },
+  methods: {},
+  mounted() {
+    const trackFace = async () => {
+      await tf.setBackend("wasm");
+      //console.log(tf.getBackend());
+
+      // Load the MediaPipe facemesh model.
+      const model = await faceLandmarksDetection.load(
+        faceLandmarksDetection.SupportedPackages.mediapipeFacemesh
+      );
+      const video = document.querySelector("video");
+      this.loading = false;
+
+      let last_blinked = 0;
+      const start_time = new Date().getTime();
+      while (true) {
+        const faces = await model.estimateFaces({ input: video });
+
+        if (faces.length === 0) {
+          this.error = "We can't see you, please move closer to the camera";
+          continue;
+        } else {
+          this.error = "";
+        }
+
+        const face = faces[0];
+        const start = face.boundingBox.topLeft;
+        const end = face.boundingBox.bottomRight;
+        const size = [end[0] - start[0], end[1] - start[1]];
+
+        const mesh = face.mesh;
+        const left = [-1, 33, 160, 158, 133, 153, 144];
+        const EAR_LEFT =
+          (Math.abs(mesh[left[2]][0] - mesh[left[6]][0]) +
+            Math.abs(mesh[left[3]][0] - mesh[left[5]][0])) /
+          (2 * Math.abs(mesh[left[1]][1] - mesh[left[4]][1]));
+        const right = [-1, 362, 385, 387, 263, 373, 380];
+        const EAR_RIGHT =
+          (Math.abs(mesh[right[2]][0] - mesh[right[6]][0]) +
+            Math.abs(mesh[right[3]][0] - mesh[right[5]][0])) /
+          (2 * Math.abs(mesh[right[1]][1] - mesh[right[4]][1]));
+
+        const time_now = new Date().getTime();
+        const mins = (time_now - start_time) / 1000 / 60;
+        this.blinksPerMinute = Math.round(this.blinks / mins);
+        const timeOut = 300;
+        const maxEarValue = 0.9;
+        //console.log(this.blinks);
+        if (
+          EAR_LEFT < maxEarValue &&
+          EAR_RIGHT < maxEarValue &&
+          time_now - last_blinked > timeOut
+        ) {
+          this.blinks++;
+          //console.log(mins)
+          last_blinked = new Date().getTime();
+        }
+
+        await tf.nextFrame();
+      }
+    };
+    const video = document.getElementById("camera");
+
+    // capture live video stream from web camera
+    if (navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then(function (stream) {
+          video.srcObject = stream;
+        });
+    }
+
+    function checkVideoLoaded() {
+      // check if the video is loaded and ready for processing
+      if (video.readyState === 4) {
+        console.log("video is ready for processing..");
+        trackFace();
+      } else {
+        console.log("nope, not ready yet..");
+        setTimeout(checkVideoLoaded, 20);
+      }
+    }
+    checkVideoLoaded();
+  },
+};
+</script>
+
+<style scoped></style>

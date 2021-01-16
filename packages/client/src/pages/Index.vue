@@ -1,14 +1,17 @@
-<template>
-  <q-page class="flex flex-center">
-    <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-full.svg"
-    >
-  </q-page>
+<template lang="pug">
+q-page.flex.flex-center.column
+  p A digital tool to monitor sleepiness
+  h1 Sleepwatch
+  q-btn(
+    color="orange",
+    type="pill",
+    label="Get started",
+    :to="{ path: '/dashboard' }"
+  )
 </template>
 
 <script>
 export default {
-  name: 'PageIndex'
-}
+  name: "PageIndex",
+};
 </script>
