@@ -7,5 +7,13 @@
       "packages/*"
     ]
   },
+  "scripts": {
+    "dev:client": "yarn workspace client dev",
+    "dev:server": "yarn workspace server dev",
+    "start:client": "yarn workspace client start",
+    "start:server": "yarn workspace server start",
+    "build:client": "yarn workspace client build",
+    "android:client": "yarn workspace client android"
+  },
   "license": "MIT"
 }

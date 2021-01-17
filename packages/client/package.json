@@ -6,6 +6,9 @@
   "author": "Dragon He <dragon@abstractultra.com>",
   "private": true,
   "scripts": {
+    "start": "quasar serve",
+    "build": "quasar build",
+    "android": "quasar dev -m capacitor -T android",
     "dev": "quasar dev",
     "lint": "eslint --ext .js,.vue ./",
     "test": "echo \"No test specified\" && exit 0"
