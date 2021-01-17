@@ -1,6 +1,6 @@
 {
   "appId": "com.example.driftr",
-  "appName": "SleepyWatch",
+  "appName": "Driftr",
   "bundledWebRuntime": false,
   "npmClient": "yarn",
   "webDir": "www"

@@ -1,4 +1,4 @@
-# SleepyWatch (client)
+# Driftr (client)
 
 Monitor drowsiness.
 

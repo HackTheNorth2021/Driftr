@@ -3,7 +3,7 @@ q-page.flex.flex-center.column
   h3.tracker-text Drowsiness: {{ drowsinessScore }}
   h5.tracker-text {{ message }}
   p(v-show="error") {{ error }}
-  video#camera(width="640", height="680", muted, autoplay)
+  video#camera(:width="frameSize.width", :height="frameSize.height", muted, autoplay)
 </template>
 
 <script>
@@ -32,6 +32,15 @@ export default {
       error: "",
       loading: true,
     };
+  },
+  computed: {
+    frameSize() {
+      if (this.$q.platform.is.mobile) {
+        return {width: 200, height: 200}
+      } else {
+        return {width: 640, height: 480}
+      }
+    }
   },
   methods: {
     checkDrowsiness() {
