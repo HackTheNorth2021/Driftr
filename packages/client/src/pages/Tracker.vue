@@ -52,25 +52,25 @@ export default {
       // check if user is on phone, meaning they are likely driving
       if (this.$q.platform.is.mobile) {
         if (this.blinksPerMinute > 8) {
-          this.drowsinessScore = "Normal";
-          this.message = "Have a safe drive!";
+          this.drowsinessScore = "HIGH";
+          this.message = "Pull over and rest immediately.";
         } else if (this.blinksPerMinute > 6) {
           this.drowsinessScore = "Moderate";
           this.message = "Be careful.";
         } else {
-          this.drowsinessScore = "HIGH";
-          this.message = "Pull over and rest immediately.";
+          this.drowsinessScore = "Normal";
+          this.message = "Have a safe drive!";
         }
       } else {
         if (this.blinksPerMinute > 15) {
-          this.drowsinessScore = "Normal";
-          this.message = "Have a nice day!";
+          this.drowsinessScore = "HIGH";
+          this.message = "Go to sleep.";
         } else if (this.blinksPerMinute > 9) {
           this.drowsinessScore = "Moderate";
           this.message = "Get some rest.";
         } else {
-          this.drowsinessScore = "HIGH";
-          this.message = "Go to sleep.";
+          this.drowsinessScore = "Normal";
+          this.message = "Have a nice day!";
         }
       }
     },

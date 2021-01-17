@@ -46,8 +46,8 @@ export default {
       const x = [];
       const y = [];
       this.blinkData.forEach((element) => {
-        x.push(element.time);
-        y.push(element.bps);
+        y.push(element.time);
+        x.push(element.bps);
       });
       const options = {
         chart: {
