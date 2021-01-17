@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@fontsource/saira": "^4.1.1",
-    "@quasar/extras": "^1.0.0",
+    "@quasar/extras": "^1.9.13",
     "@tensorflow-models/face-landmarks-detection": "0.0.1",
     "@tensorflow/tfjs": "^2.8.4",
     "@tensorflow/tfjs-backend-wasm": "^2.8.4",

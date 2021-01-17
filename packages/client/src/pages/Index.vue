@@ -9,18 +9,18 @@ q-page.flex.flex-center.column
     swipeable,
     animated,
     control-color="white",
-    height="550px",
+    :height="carouselHeight",
     navigation,
     padding,
     arrows
   )
     q-carousel-slide.column.no-wrap.flex-center(name="art")
-      img(:src="require('assets/sleeping-art.jpg')", height="400px")
+      img(:src="require('assets/sleeping-art.jpg')", :height="slideHeight")
     q-carousel-slide.column.no-wrap.flex-center(name="graph")
-      img(:src="require('assets/sleeping-art.jpg')", height="400px")
+      img(:src="require('assets/sleeping-art.jpg')", :height="slideHeight")
     q-carousel-slide.column.no-wrap.flex-center(name="screenshot")
-      img(:src="require('assets/sleeping-art.jpg')", height="400px")
-  q-btn.start-button(label="Get started", :to="{ path: '/tracker' }")
+      img(:src="require('assets/sleeping-art.jpg')", :height="slideHeight")
+  q-btn.start-button(label="Get started", :to="{ path: '/auth' }", replace)
 </template>
 
 <script>
@@ -31,6 +31,22 @@ export default {
       currentSlideName: "art",
     };
   },
+  computed: {
+    carouselHeight() {
+      if (this.$q.platform.is.mobile) {
+        return "300px";
+      } else {
+        return "550px";
+      }
+    },
+    slideHeight() {
+      if (this.$q.platform.is.mobile) {
+        return "200px";
+      } else {
+        return "400px";
+      }
+    }
+  }
 };
 </script>
 
