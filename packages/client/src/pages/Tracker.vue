@@ -1,7 +1,7 @@
 <template lang="pug">
 q-page.flex.flex-center.column
   h3.tracker-text Drowsiness: {{ drowsinessScore }}
-  h5.tracker-text {{ message }}
+  h5.tracker-text {{ message }} ({{ blinksPerMinute }}bpm)
   p(v-show="error") {{ error }}
   video#camera(
     :width="frameSize.width",
