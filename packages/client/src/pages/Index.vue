@@ -17,7 +17,7 @@ q-page.flex.flex-center.column
     q-carousel-slide.column.no-wrap.flex-center(name="art")
       img(:src="require('assets/sleeping-art.jpg')", :height="slideHeight")
     q-carousel-slide.column.no-wrap.flex-center(name="graph")
-      img(:src="require('assets/sleeping-art.jpg')", :height="slideHeight")
+      img(:src="require('assets/logo-art.jpg')", :height="slideHeight")
     q-carousel-slide.column.no-wrap.flex-center(name="screenshot")
       img(:src="require('assets/sleeping-art.jpg')", :height="slideHeight")
   q-btn.start-button(label="Get started", :to="{ path: '/auth' }", replace)

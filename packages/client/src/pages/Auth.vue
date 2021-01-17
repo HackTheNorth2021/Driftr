@@ -1,9 +1,9 @@
 <template lang="pug">
 q-page.flex.flex-center.column
-  q-input(filled, bg-color="white", label="Email", v-model="email")
-  q-input(filled, bg-color="white", label="Password", v-model="password")
-  q-btn(color="green", label="Sign in", @click="signIn")
-  q-btn(color="green", label="Sign up", @click="signUp")
+  q-input.text-field(filled, bg-color="white", label="Email", v-model="email")
+  q-input.text-field(filled, bg-color="white", label="Password", v-model="password")
+  q-btn.text-field(color="green", label="Sign in", @click="signIn")
+  q-btn.text-field(color="green", label="Sign up", @click="signUp")
 </template>
 
 <script>
@@ -54,4 +54,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.text-field {
+  margin-bottom: 15px;
+}
+</style>

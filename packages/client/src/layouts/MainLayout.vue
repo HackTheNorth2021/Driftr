@@ -44,9 +44,9 @@ export default {
     return {
       tabs: [
         { title: "Dash", to: { path: "/dashboard" } },
+        { title: "Tracker", to: { path: "/tracker" } },
         { title: "About", to: { path: "/about" } },
-        { title: "Login", to: { path: "/login" } },
-        { title: "Sign up", to: { path: "/signup" } },
+        { title: "Download", to: { path: "/download" } },
       ],
     };
   },
