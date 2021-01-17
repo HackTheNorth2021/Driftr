@@ -7,7 +7,7 @@ q-page.flex.flex-center.column
 </template>
 
 <script>
-import ApexCharts from 'apexcharts';
+import ApexCharts from "apexcharts";
 
 export default {
   name: "Dashboard",
@@ -19,11 +19,11 @@ export default {
   computed: {
     platform() {
       if (this.$q.platform.is.mobile) {
-        return 'mobile'
+        return "mobile";
       } else {
-        return 'web'
+        return "web";
       }
-    }
+    },
   },
   methods: {
     async getBlinkData() {
@@ -31,7 +31,7 @@ export default {
         const response = await this.$axios.post(
           "https://driftrserver.herokuapp.com/getData",
           {
-            username: "Bob",
+            username: this.$store.state.signedIn,
           }
         );
         this.blinkData = response.data;
@@ -87,7 +87,8 @@ export default {
 .web {
   width: 50%;
 }
-h3, h4 {
+h3,
+h4 {
   line-height: 0;
 }
 </style>
