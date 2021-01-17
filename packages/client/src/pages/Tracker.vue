@@ -3,7 +3,12 @@ q-page.flex.flex-center.column
   h3.tracker-text Drowsiness: {{ drowsinessScore }}
   h5.tracker-text {{ message }}
   p(v-show="error") {{ error }}
-  video#camera(:width="frameSize.width", :height="frameSize.height", muted, autoplay)
+  video#camera(
+    :width="frameSize.width",
+    :height="frameSize.height",
+    muted,
+    autoplay
+  )
 </template>
 
 <script>
@@ -36,11 +41,11 @@ export default {
   computed: {
     frameSize() {
       if (this.$q.platform.is.mobile) {
-        return {width: 200, height: 200}
+        return { width: 200, height: 200 };
       } else {
-        return {width: 640, height: 480}
+        return { width: 640, height: 480 };
       }
-    }
+    },
   },
   methods: {
     checkDrowsiness() {
@@ -76,6 +81,36 @@ export default {
     },
   },
   mounted() {
+    const getId = async () => {
+      //PARAM: username
+      try {
+        const response = await this.$axios.post(
+          "https://driftrserver.herokuapp.com/getId",
+          {
+            username: this.$store.state.signedIn,
+          }
+        );
+        //console.log(response.data);
+        return response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    const addBlinkData = async () => {
+      try {
+        const id = await getId();
+        const response = await this.$axios.post(
+          "https://driftrserver.herokuapp.com/addBlinkData",
+          {
+            id: id,
+            bps: this.blinksPerMinute,
+          }
+        );
+        //console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
     const trackFace = async () => {
       await tf.setBackend("wasm");
       //console.log(tf.getBackend());
@@ -95,6 +130,8 @@ export default {
           setTimeout(resolve, ms);
         });
       }
+
+      setInterval(addBlinkData, 60000);
 
       while (true) {
         const faces = await model.estimateFaces({ input: video });
