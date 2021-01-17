@@ -1,7 +1,7 @@
 <template lang="pug">
 q-page.flex.flex-center.column
   q-input.text-field(filled, bg-color="white", label="Email", v-model="email")
-  q-input.text-field(filled, bg-color="white", label="Password", v-model="password")
+  q-input.text-field(filled, bg-color="white", label="Password", v-model="password", type="password")
   q-btn.text-field(color="green", label="Sign in", @click="signIn")
   q-btn.text-field(color="green", label="Sign up", @click="signUp")
 </template>
