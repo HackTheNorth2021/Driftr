@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">SleepyWatch</string>
+    <string name="title_activity_main">SleepyWatch</string>
+    <string name="package_name">com.example.driftr</string>
+    <string name="custom_url_scheme">com.example.driftr</string>
+</resources>
