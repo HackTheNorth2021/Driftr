@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.0.1",
   "description": "Monitor drowsiness.",
-  "productName": "SleepyWatch",
+  "productName": "Driftr",
   "author": "Dragon He <dragon@abstractultra.com>",
   "private": true,
   "scripts": {
