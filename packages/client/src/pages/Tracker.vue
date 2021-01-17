@@ -22,7 +22,7 @@ setWasmPaths({
 });
 
 export default {
-  name: "Dashboard.vue",
+  name: "Tracker.vue",
   data() {
     return {
       blinks: 0,

@@ -20,7 +20,7 @@ q-page.flex.flex-center.column
       img(:src="require('assets/sleeping-art.jpg')", height="400px")
     q-carousel-slide.column.no-wrap.flex-center(name="screenshot")
       img(:src="require('assets/sleeping-art.jpg')", height="400px")
-  q-btn.start-button(label="Get started", :to="{ path: '/dashboard' }")
+  q-btn.start-button(label="Get started", :to="{ path: '/tracker' }")
 </template>
 
 <script>
