@@ -120,8 +120,8 @@ module.exports = function (/* ctx */) {
       workboxPluginMode: "GenerateSW", // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: `SleepyWatch`,
-        short_name: `SleepyWatch`,
+        name: `Driftr`,
+        short_name: `Driftr`,
         description: `Monitor drowsiness.`,
         display: "standalone",
         orientation: "portrait",

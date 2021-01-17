@@ -1,7 +1,7 @@
 <template lang="pug">
 q-page.flex.flex-center.column
-  h3 Blinks Per Minute: {{ blinksPerMinute }}
-  h5 Total blinks: {{ blinks }}
+  h3.tracker-text Drowsiness: {{ drowsinessScore }}
+  h5.tracker-text {{ message }}
   p(v-show="error") {{ error }}
   video#camera(width="640", height="680", muted, autoplay)
 </template>
@@ -27,11 +27,45 @@ export default {
     return {
       blinks: 0,
       blinksPerMinute: 0,
+      drowsinessScore: "...",
+      message: "Calculating drowsiness",
       error: "",
       loading: true,
     };
   },
-  methods: {},
+  methods: {
+    checkDrowsiness() {
+      // check if user is on phone, meaning they are likely driving
+      if (this.$q.platform.is.mobile) {
+        if (this.blinksPerMinute > 8) {
+          this.drowsinessScore = "Normal";
+          this.message = "Have a safe drive!";
+        } else if (this.blinksPerMinute > 6) {
+          this.drowsinessScore = "Moderate";
+          this.message = "Be careful.";
+        } else {
+          this.drowsinessScore = "HIGH";
+          this.message = "Pull over and rest immediately.";
+        }
+      } else {
+        if (this.blinksPerMinute > 15) {
+          this.drowsinessScore = "Normal";
+          this.message = "Have a nice day!";
+        } else if (this.blinksPerMinute > 9) {
+          this.drowsinessScore = "Moderate";
+          this.message = "Get some rest.";
+        } else {
+          this.drowsinessScore = "HIGH";
+          this.message = "Go to sleep.";
+        }
+      }
+    },
+  },
+  watch: {
+    blinksPerMinute() {
+      this.checkDrowsiness();
+    },
+  },
   mounted() {
     const trackFace = async () => {
       await tf.setBackend("wasm");
@@ -46,11 +80,20 @@ export default {
 
       let last_blinked = 0;
       const start_time = new Date().getTime();
+
+      function sleep(ms) {
+        return new Promise((resolve) => {
+          setTimeout(resolve, ms);
+        });
+      }
+
       while (true) {
         const faces = await model.estimateFaces({ input: video });
 
         if (faces.length === 0) {
-          this.error = "We can't see you, please move closer to the camera";
+          this.error =
+            "We can't see you, please make sure you are visible in the frame.";
+          await sleep(3000);
           continue;
         } else {
           this.error = "";
@@ -90,6 +133,7 @@ export default {
         }
 
         await tf.nextFrame();
+        await sleep(100);
       }
     };
     const video = document.getElementById("camera");
@@ -118,4 +162,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.tracker-text {
+  line-height: 0;
+}
+</style>

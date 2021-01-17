@@ -11,6 +11,7 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+    "@fontsource/saira": "^4.1.1",
     "@quasar/extras": "^1.0.0",
     "@tensorflow-models/face-landmarks-detection": "0.0.1",
     "@tensorflow/tfjs": "^2.8.4",
@@ -25,6 +26,10 @@
     "@prettier/plugin-pug": "^1.13.2",
     "@quasar/app": "^2.0.0",
     "babel-eslint": "^10.0.1",
+    "devtron": "^1.4.0",
+    "electron": "^9.0.0",
+    "electron-debug": "^3.0.1",
+    "electron-devtools-installer": "^3.0.0",
     "eslint": "^7.18.0",
     "eslint-config-prettier": "^6.9.0",
     "eslint-loader": "^3.0.3",
